@@ -3,3 +3,5 @@
 <%= @users.each do |user| %>
   <p><%= link_to user.name, user %></p>
 <% end %>
+
+<p><%= link_to "Sign up", new_user_path %></p>
