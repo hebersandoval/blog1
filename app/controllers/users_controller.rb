@@ -9,8 +9,11 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
-    @user.save
-    redirect_to user_path(@user)
+    if @user.save
+      redirect_to user_path(@user)
+    else
+      render "new"
+    end
   end
 
   def show
@@ -23,8 +26,11 @@ class UsersController < ApplicationController
 
   def update
     @user = User.find(params[:id])
-    @user.update(user_params)
-    redirect_to user_path(@user)
+    if @user.update(user_params)
+      redirect_to user_path(@user)
+    else
+      render "edit"
+    end
   end
 
   def destroy
