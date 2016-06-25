@@ -9,8 +9,11 @@ class PostsController < ApplicationController
 
   def create
     @post = Post.new(post_params)
-    @post.save
-    redirect_to post_path(@post)
+    if @post.save
+      redirect_to post_path(@post)
+    else
+      render "new"
+    end
   end
 
   def show
@@ -23,8 +26,11 @@ class PostsController < ApplicationController
 
   def update
     @post = Post.find(params[:id])
-    @post.update(post_params)
-    redirect_to @post # can infer into the @post instance and know to go to the show page, see create action.
+    if @post.update(post_params)
+      redirect_to @post # can infer into the @post instance and know to go to the show page, see create action.
+    else
+      render "edit"
+    end
   end
 
   def destroy
