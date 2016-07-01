@@ -13,6 +13,7 @@ class UsersController < ApplicationController
       flash[:success] = "Welcome to the Blog App!"
       redirect_to user_path(@user)
     else
+      flash.now[:danger] = "Your account has not been created."
       render "new"
     end
   end
