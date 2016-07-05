@@ -9,7 +9,11 @@ class PostsController < ApplicationController
 
   def create
     @post = Post.new(post_params)
+    @user = User.find_by_id(session[:user_id])
     if @post.save
+      # associates a post to a user by using the .create method, which automatically sets the @user.id
+      @post = @user.posts.create(title: params[:title], content: params[:content])
+      # @post = @user.posts << @post
       redirect_to post_path(@post)
     else
       render "new"
