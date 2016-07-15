@@ -10,11 +10,19 @@ class PostsController < ApplicationController
   def create
     @post = Post.new(post_params)
     @user = User.find_by_id(session[:user_id])
+
     if @post.save
+
       # associates a post to a user by using the .create method, which automatically sets the @user.id
-      @post = @user.posts.create(title: params[:title], content: params[:content])
-      # @post = @user.posts << @post
-      redirect_to post_path(@post)
+
+      #based on our model, looks like the only thing connecting user to post is a comment....
+      #Post model => has_many :users, through: :comments
+      @comment = Comment.create(user: @user, post: @post, content: @post.content)
+
+      #@post= @user.posts.create(title: params[:title], content: params[:content])
+
+
+      redirect_to posts_path
     else
       render "new"
     end
